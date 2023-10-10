@@ -18,6 +18,13 @@ foreach($PokemonName in [System.IO.File]::ReadLines($PokemonLineupFullFilePath))
 {
 	$SourcePath = $PokemonSourceImagesFolder + $PokemonName + ".png"
 	$DestinationPath = $StreamMediaDestinationFolder + "pokemon" + $Index + ".png"
+
+	$SourceFileExists = Test-Path -Path $SourcePath
+	if (-Not $SourceFileExists)
+	{
+		$SourcePath = $PokemonSourceImagesFolder + "noimage.png"
+	}
+
 	copy-item $SourcePath -Destination $DestinationPath
 	$Index++
 }
