@@ -16,7 +16,7 @@ $PokemonLineupFullFilePath = ".\Pokemon Lineup.txt"
 $Index = 1;
 foreach($PokemonName in [System.IO.File]::ReadLines($PokemonLineupFullFilePath))
 {
-	$SourcePath = $PokemonSourceImagesFolder + $PokemonName + ".png"
+	$SourcePath = $PokemonSourceImagesFolder + $PokemonName.ToLower() + ".png"
 	$DestinationPath = $StreamMediaDestinationFolder + "pokemon" + $Index + ".png"
 
 	$SourceFileExists = Test-Path -Path $SourcePath
