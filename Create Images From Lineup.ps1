@@ -16,8 +16,23 @@ $PokemonLineupFullFilePath = ".\Pokemon Lineup.txt"
 $Index = 1;
 foreach($PokemonName in [System.IO.File]::ReadLines($PokemonLineupFullFilePath))
 {
+    $DestinationPath = $StreamMediaDestinationFolder + "pokemon" + $Index + ".png"
+    $DestinationPathShadow = $StreamMediaDestinationFolder + "shadow" + $Index + ".png"
+
+    # Shadow
+    if(($PokemonName.Length -gt 7) -and $PokemonName.Substring($PokemonName.Length - 7, 7).ToLower() -eq "_shadow")
+    {
+        $PokemonName = $PokemonName.Substring(0, $PokemonName.Length - 7)
+        $SourcePathShadow = $PokemonSourceImagesFolder + "shadow.png"
+    }
+    else
+    {
+        $SourcePathShadow = $PokemonSourceImagesFolder + "empty.png"
+    }
+
+    copy-item $SourcePathShadow -Destination $DestinationPathShadow
+
 	$SourcePath = $PokemonSourceImagesFolder + $PokemonName.ToLower() + ".png"
-	$DestinationPath = $StreamMediaDestinationFolder + "pokemon" + $Index + ".png"
 
 	$SourceFileExists = Test-Path -Path $SourcePath
 	if (-Not $SourceFileExists)
